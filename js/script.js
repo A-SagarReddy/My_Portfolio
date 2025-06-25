@@ -5,8 +5,29 @@ const navLinks = document.querySelector('.nav-links');
 if (hamburger && navLinks) {
   hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
+    // Prevent background scroll when menu is open on mobile
+    if (window.innerWidth <= 768) {
+      document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    }
+  });
+  // Close menu when a nav link is clicked (mobile UX)
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth <= 768) {
+        navLinks.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
   });
 }
+
+// Prevent double-tap zoom on buttons/links (mobile)
+document.addEventListener('touchstart', function(e) {
+  if (e.target.classList.contains('btn') || e.target.closest('.btn')) {
+    e.preventDefault();
+    e.target.click();
+  }
+}, { passive: false });
 
 // Typewriter Effect
 const typedText = document.querySelector('.typed-text');
