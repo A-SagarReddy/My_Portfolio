@@ -21,13 +21,13 @@ if (hamburger && navLinks) {
   });
 }
 
-// Prevent double-tap zoom on buttons/links (mobile)
-document.addEventListener('touchstart', function(e) {
-  if (e.target.classList.contains('btn') || e.target.closest('.btn')) {
-    e.preventDefault();
-    e.target.click();
-  }
-}, { passive: false });
+// Remove double-tap zoom prevention for .btn (fixes delayed button actions in desktop mode)
+// document.addEventListener('touchstart', function(e) {
+//   if (e.target.classList.contains('btn') || e.target.closest('.btn')) {
+//     e.preventDefault();
+//     e.target.click();
+//   }
+// }, { passive: false });
 
 // Typewriter Effect
 const typedText = document.querySelector('.typed-text');
