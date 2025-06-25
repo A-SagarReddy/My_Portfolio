@@ -58,7 +58,7 @@ function loop() {
     i = (i + 1) % phrases.length;
   }
 
-  setTimeout(loop, isDeleting ? 50 : 100);
+  setTimeout(loop, isDeleting ? 75 : 150);
 }
 loop();
 
@@ -68,6 +68,7 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.classList.add('reveal');
+      observer.unobserve(entry.target); // Stop watching once revealed
     }
   });
 }, { threshold: 0.1 });
@@ -92,13 +93,20 @@ function enableVanta() {
       backgroundColor: 0x0a0a0a,
       points: 10.0,
       spacing: 20.0,
-      maxDistance: 20.0
+      maxDistance: 20.0,
+      fpsLimit: 20 // Limit frames per second to reduce GPU load
     });
   }
 }
 
 window.addEventListener('DOMContentLoaded', enableVanta);
-window.addEventListener('resize', enableVanta);
+let resizeTimeout;
+window.addEventListener('resize', () => {
+  if (resizeTimeout) cancelAnimationFrame(resizeTimeout);
+  resizeTimeout = requestAnimationFrame(() => {
+    enableVanta();
+  });
+});
 
 // Smooth scroll for anchor links (improves button response)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
