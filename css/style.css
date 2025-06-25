@@ -352,7 +352,15 @@ body, html {
 
 @media (max-width: 1024px) {
   #vanta-bg {
-    display: none !important;
+    display: block !important;
+    background: linear-gradient(135deg, #0a0a0a 60%, #004c3f 100%);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
   }
 }
 

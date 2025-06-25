@@ -118,3 +118,23 @@ function handleVanta() {
 
 window.addEventListener('resize', handleVanta);
 window.addEventListener('DOMContentLoaded', handleVanta);
+
+// Smooth scroll for anchor links (improves button response)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const targetId = this.getAttribute('href').slice(1);
+    const target = document.getElementById(targetId);
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Close mobile nav if open
+      if (window.innerWidth <= 1024) {
+        const navLinks = document.querySelector('.nav-links');
+        if (navLinks && navLinks.classList.contains('active')) {
+          navLinks.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+    }
+  });
+});
