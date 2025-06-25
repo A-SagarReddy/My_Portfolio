@@ -169,7 +169,7 @@ body, html {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   gap: 1.2rem;
   margin-top: 2rem;
 }
@@ -184,6 +184,9 @@ body, html {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   opacity: 0;
   transform: translateY(20px);
+  min-width: 0;
+  word-break: break-word;
+  text-align: center;
 }
 
 .skill-item.reveal {

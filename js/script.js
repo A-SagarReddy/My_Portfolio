@@ -21,13 +21,7 @@ if (hamburger && navLinks) {
   });
 }
 
-// Remove double-tap zoom prevention for .btn (fixes delayed button actions in desktop mode)
-// document.addEventListener('touchstart', function(e) {
-//   if (e.target.classList.contains('btn') || e.target.closest('.btn')) {
-//     e.preventDefault();
-//     e.target.click();
-//   }
-// }, { passive: false });
+// Remove all touch event hacks for .btn to avoid delayed actions
 
 // Typewriter Effect
 const typedText = document.querySelector('.typed-text');
@@ -126,4 +120,18 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       }
     }
   });
+});
+
+// Fix skills grid overlap on small screens
+// In your CSS, ensure enough gap and min-width for .skill-item
+// (This is a JS file, so add a runtime fix for demonstration)
+window.addEventListener('DOMContentLoaded', () => {
+  const skillsGrid = document.querySelector('.skills-grid');
+  if (skillsGrid) {
+    skillsGrid.style.gap = '1.2rem';
+    skillsGrid.querySelectorAll('.skill-item').forEach(item => {
+      item.style.minWidth = '100px';
+      item.style.wordBreak = 'break-word';
+    });
+  }
 });
