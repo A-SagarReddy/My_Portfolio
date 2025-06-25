@@ -350,6 +350,12 @@ body, html {
   }
 }
 
+@media (max-width: 1024px) {
+  #vanta-bg {
+    display: none !important;
+  }
+}
+
 /* Navbar enhanced hover effects */
 .nav-links li a {
   color: #00ffc6;

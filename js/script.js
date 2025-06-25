@@ -73,3 +73,48 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 sections.forEach(section => observer.observe(section));
+
+// Vanta background: Only enable on large screens
+function isLargeScreen() {
+  return window.innerWidth > 1024;
+}
+
+function enableVanta() {
+  if (window.VANTA && window.VANTA.NET && isLargeScreen()) {
+    window.VANTA.NET({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0x004c3f,
+      backgroundColor: 0x0a0a0a,
+      points: 10.0,
+      spacing: 20.0,
+      maxDistance: 20.0
+    });
+  }
+}
+
+// Remove Vanta if present
+function disableVanta() {
+  if (window.vantaEffect && typeof window.vantaEffect.destroy === 'function') {
+    window.vantaEffect.destroy();
+    window.vantaEffect = null;
+  }
+  const vantaBg = document.getElementById('vanta-bg');
+  if (vantaBg) vantaBg.removeAttribute('style');
+}
+
+function handleVanta() {
+  if (isLargeScreen()) {
+    enableVanta();
+  } else {
+    disableVanta();
+  }
+}
+
+window.addEventListener('resize', handleVanta);
+window.addEventListener('DOMContentLoaded', handleVanta);
