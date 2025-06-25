@@ -74,14 +74,13 @@ const observer = new IntersectionObserver((entries) => {
 
 sections.forEach(section => observer.observe(section));
 
-// Vanta background: Only enable on large screens
-function isLargeScreen() {
-  return window.innerWidth > 1024;
-}
-
+// Vanta background: Always enable, even on mobile
 function enableVanta() {
-  if (window.VANTA && window.VANTA.NET && isLargeScreen()) {
-    window.VANTA.NET({
+  if (window.VANTA && window.VANTA.NET) {
+    if (window.vantaEffect && typeof window.vantaEffect.destroy === 'function') {
+      window.vantaEffect.destroy();
+    }
+    window.vantaEffect = window.VANTA.NET({
       el: "#vanta-bg",
       mouseControls: true,
       touchControls: true,
@@ -98,26 +97,8 @@ function enableVanta() {
   }
 }
 
-// Remove Vanta if present
-function disableVanta() {
-  if (window.vantaEffect && typeof window.vantaEffect.destroy === 'function') {
-    window.vantaEffect.destroy();
-    window.vantaEffect = null;
-  }
-  const vantaBg = document.getElementById('vanta-bg');
-  if (vantaBg) vantaBg.removeAttribute('style');
-}
-
-function handleVanta() {
-  if (isLargeScreen()) {
-    enableVanta();
-  } else {
-    disableVanta();
-  }
-}
-
-window.addEventListener('resize', handleVanta);
-window.addEventListener('DOMContentLoaded', handleVanta);
+window.addEventListener('DOMContentLoaded', enableVanta);
+window.addEventListener('resize', enableVanta);
 
 // Smooth scroll for anchor links (improves button response)
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
