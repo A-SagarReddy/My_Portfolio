@@ -169,8 +169,8 @@ body, html {
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1.2rem;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
   margin-top: 2rem;
 }
 
@@ -364,6 +364,15 @@ body, html {
     height: 100vh;
     z-index: -1;
     pointer-events: none;
+  }
+  .skills-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: 1fr;
   }
 }
 

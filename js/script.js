@@ -122,16 +122,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Fix skills grid overlap on small screens
-// In your CSS, ensure enough gap and min-width for .skill-item
-// (This is a JS file, so add a runtime fix for demonstration)
-window.addEventListener('DOMContentLoaded', () => {
-  const skillsGrid = document.querySelector('.skills-grid');
-  if (skillsGrid) {
-    skillsGrid.style.gap = '1.2rem';
-    skillsGrid.querySelectorAll('.skill-item').forEach(item => {
-      item.style.minWidth = '100px';
-      item.style.wordBreak = 'break-word';
-    });
-  }
-});
+// Remove all runtime JS hacks for skills grid (CSS now handles layout)
+// Fix delayed button actions: add fast click for .btn on touch devices
+function isTouchDevice() {
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+}
+if (isTouchDevice()) {
+  document.querySelectorAll('.btn').forEach(btn => {
+    btn.addEventListener('touchstart', function(e) {
+      e.preventDefault();
+      this.click();
+    }, { passive: false });
+  });
+}
