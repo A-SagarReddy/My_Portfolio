@@ -21,8 +21,6 @@ if (hamburger && navLinks) {
   });
 }
 
-// Remove all touch event hacks for .btn to avoid delayed actions
-
 // Typewriter Effect
 const typedText = document.querySelector('.typed-text');
 const phrases = [
@@ -122,16 +120,30 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Remove all runtime JS hacks for skills grid (CSS now handles layout)
-// Fix delayed button actions: add fast click for .btn on touch devices
-function isTouchDevice() {
-  return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-}
-if (isTouchDevice()) {
-  document.querySelectorAll('.btn').forEach(btn => {
-    btn.addEventListener('touchstart', function(e) {
-      e.preventDefault();
-      this.click();
-    }, { passive: false });
+// Fast click implementation for all buttons to eliminate mobile delay
+document.querySelectorAll('.btn').forEach(btn => {
+  // Touch event handler
+  btn.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    this.classList.add('active');
+    this.click();
+  }, { passive: false });
+  
+  // Mouse event handler for consistency
+  btn.addEventListener('mousedown', function() {
+    this.classList.add('active');
   });
-}
+  
+  // Remove active class on release
+  btn.addEventListener('touchend', function() {
+    this.classList.remove('active');
+  });
+  
+  btn.addEventListener('mouseup', function() {
+    this.classList.remove('active');
+  });
+  
+  btn.addEventListener('mouseleave', function() {
+    this.classList.remove('active');
+  });
+});
